@@ -1,5 +1,6 @@
 import torch
 import numpy as np
+import torch.distributions as td
 
 """
 
@@ -13,6 +14,7 @@ likelihoods of those samples.
 
 """
 
+
 def gaussian_likelihood(x, mu, log_std):
     """
     Args:
@@ -23,12 +25,10 @@ def gaussian_likelihood(x, mu, log_std):
     Returns:
         Tensor with shape [batch]
     """
-    #######################
-    #                     #
-    #   YOUR CODE HERE    #
-    #                     #
-    #######################
-    return torch.zeros(1)
+    log_std = torch.as_tensor(log_std)
+    pigreek = torch.as_tensor([np.pi])
+    result = -0.5 * torch.sum((x - mu) ** 2 / (torch.exp(log_std) ** 2) + 2 * log_std + torch.log(2 * pigreek), axis=-1)
+    return result
 
 
 if __name__ == '__main__':
